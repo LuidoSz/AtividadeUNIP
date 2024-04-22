@@ -1,0 +1,56 @@
+/* Lógico_1: */
+
+CREATE TABLE Fornecedor (
+    Codigo INT PRIMARY KEY,
+    Nome VARCHAR (100),
+    CNPJ VARCHAR (15),
+    Endereco VARCHAR (200)
+);
+
+CREATE TABLE Produto (
+    Codigo INT PRIMARY KEY,
+    Nome VARCHAR (100),
+    Descricao VARCHAR (200),
+    fk_Fornecedor_Codigo INT
+);
+
+CREATE TABLE Cliente (
+    Codigo INT PRIMARY KEY,
+    Nome VARCHAR (100),
+    Endereco VARCHAR (200),
+    fk_Venda_Num_NFiscal INT (9)
+);
+
+CREATE TABLE Venda (
+    Num_NFiscal INT (9) PRIMARY KEY,
+    Data DATE,
+    Valor_Total FLOAT,
+    fk_Produto_Código INT,
+    fk_Loja_Código INT
+);
+
+CREATE TABLE Loja (
+    Código INT PRIMARY KEY,
+    Nome VARCHAR (100),
+    CNPJ VARCHAR (15)
+);
+ 
+ALTER TABLE Produto ADD CONSTRAINT FK_Produto_2
+    FOREIGN KEY (fk_Fornecedor_Codigo)
+    REFERENCES Fornecedor (Codigo)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_2
+    FOREIGN KEY (fk_Venda_Num_NFiscal)
+    REFERENCES Venda (Num_NFiscal)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Venda ADD CONSTRAINT FK_Venda_2
+    FOREIGN KEY (fk_Produto_Código)
+    REFERENCES Produto (Codigo)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Venda ADD CONSTRAINT FK_Venda_3
+    FOREIGN KEY (fk_Loja_Código)
+    REFERENCES Loja (Código)
+    ON DELETE CASCADE;
